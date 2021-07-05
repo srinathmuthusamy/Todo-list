@@ -1,0 +1,46 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: none;
+    font-family: Montserrat;
+    font-weight: bold;
+}
+input {
+    font-size: 1.5rem;
+    border: 1px solid black;
+    border-radius: 3px;
+    padding-left: 3px;
+}
+.main {
+  margin-left: 35%;
+  margin-top: 10%;
+  display: flex;
+}
+.who {
+    margin-left: 35%;
+    margin-top: 10%;
+}
+#one {
+    margin-left: 5px;
+    padding: 5px;
+    background-image: linear-gradient(to top left, #39b385, #ececec);
+    border: linear-gradient(to top left, #39b385, #ececec);
+    border-radius: 3px;
+}
+.btn {
+    background-image: linear-gradient(to top left, #e52a5a, #ff585f);
+    border: 2px solid linear-gradient(to top left, #e52a5a, #ff585f);
+    margin-left: 5px;
+    padding: 5px;
+    border-radius: 3px;
+}
+.output {
+  display: none;
+}
+#own {
+    margin-left: 10px;
+}
+.btn {
+    width: 2rem;
+}
