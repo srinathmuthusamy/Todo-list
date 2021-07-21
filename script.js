@@ -1,32 +1,92 @@
-//Selections
-const who = document.querySelector('.who')
-const main = document.querySelector(".main");
-const todoi = document.querySelector("#todo-input");
-const btn = document.querySelector(".btn");
-const btnid = document.querySelector("#own");
-const two = document.querySelector("#two");
-const result = document.querySelector(".output");
-const one = document.querySelector("#one");
-const ow = document.querySelector('#own')
+// localStorage.clear()
+//Selectors
+const todoInput = document.querySelector(".todo-input");
+const todoButton = document.querySelector(".todo-button");
+const todoList = document.querySelector(".todo-list");
+const todoDiv = document.querySelector(".todo");
+const filterDiv = document.querySelector(".select");
+const filterOption = document.querySelector(".filter-todo");
 
-//Prompt function
-const whoprompt = prompt("What's your name")
-who.textContent = whoprompt + "'s" + ' ' + 'Todo List';
+//Event Listeners
+todoButton.addEventListener("click", addTodo);
+todoList.addEventListener("click", deleteCheck);
+// filterOption.addEventListener("click", filterTodo);
 
-if(whoprompt === ''){
-    who.textContent = 'Unknown' + "'s" + ' ' + 'Todo List';
+//Prompt
+var prompt = prompt("What's Your Name");//var is used because the prompt does not pop in chrome when i use let or const 
+document.querySelector('.name').textContent = `${prompt}'s Todo List`
+
+//Funtions
+function addTodo(event) {
+  //PreventDefault
+  event.preventDefault();
+  //Todo Div
+  const todoDiv = document.createElement("div");
+  todoDiv.classList.add("todo");
+  //Create LI
+  const newTodo = document.createElement("li");
+  newTodo.innerText = todoInput.value;
+  todoInput.value = "";
+  //Add to local Storage 
+  addLocalTodos(todoInput.value)
+  newTodo.classList.add("todo-item");
+  todoDiv.appendChild(newTodo);
+  //Completed Button
+  const completedBtn = document.createElement("button");
+  completedBtn.innerHTML = '<i class="fas fa-check"></i>';
+  completedBtn.classList.add("completed-btn");
+  todoDiv.appendChild(completedBtn);
+  //Trash Button
+  const trashBtn = document.createElement("button");
+  trashBtn.innerHTML = '<i class="fas fa-trash"></i>';
+  trashBtn.classList.add("trash-btn");
+  todoDiv.appendChild(trashBtn);
+  //Append
+  todoList.appendChild(todoDiv);
 }
 
-//New functioning
+function deleteCheck(e) {
+  const item = e.target;
+  //Delete
+  if (item.classList[0] === "trash-btn") {
+    const todo = item.parentElement;
+    todo.classList.add("fall");
+    // todo.remove()
+    todo.addEventListener("transitioned", function () {
+      todo.remove();
+    });
+  }
+  //Check
+  if (item.classList[0] === "completed-btn") {
+    const todo = item.parentElement;
+    todo.classList.toggle("completed");
+  }
+}
+// function filterTodo(e) {
+//   const todos = todoList.childNodes;
+//   console.log(todos);
+//   todos.forEach(function (todo) {
+//     switch (e.target.value) {
+//       case "all":
+//         console.log('Works');
+//         break;
+//       case "completed":
+//         if (todo.classlist.contains("completed")) {
+//         console.log('Todo')
+//     }
+// ;
+//   }
+// }
+// )
+// }
 
-one.addEventListener('click', function (){
-   result.classList.remove('output')
-   btnid.classList.remove('output')
-   result.innerHTML = `${todoi.value}`;
-   todoi.value = ''
-})
-//Delete functioning
-ow.addEventListener('click', function(){
-  result.classList.add('output')
-  btnid.classList.add('output')
-})
+function addLocalTodos(todo){
+  let todos;
+  if(localStorage.getItem('todos') === null){
+    todos = [];
+  }else {
+    todos = JSON.parse(localStorage.getItem('todos'))
+  }
+  todos.push(todo)
+  localStorage.setItem('todos', JSON.stringify(todos))
+}
